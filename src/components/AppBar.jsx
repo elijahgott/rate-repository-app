@@ -1,31 +1,41 @@
-import { View, FlatList, StyleSheet } from 'react-native';
+import { View, FlatList, StyleSheet, ScrollView } from 'react-native';
+import { Link } from 'react-router-native';
 import Constants from 'expo-constants';
 
 import AppBarTab from './AppBarTab';
+import Text from './Text';
 
 import theme from '../theme'
 
 const styles = StyleSheet.create({
   container: {
-    justifyContent: 'center',
-    paddingTop: Constants.statusBarHeight + 12,
-    paddingBottom: 12,
+    // justifyContent: 'center',
+    paddingTop: Constants.statusBarHeight + 16,
+    paddingBottom: 16,
     backgroundColor: theme.colors.primary,
   },
   list: {
     display: 'flex',
     flexDirection: 'row',
-    justifyContent: 'center'
+    justifyContent: 'center',
+    marginLeft: 12,
+    marginRight: 12,
+  },
+  tab: {
+    padding: 8,
+    borderRadius: 8
   }
 });
 
 const tabs = [
   {
     name: 'Repositories',
+    to: '/',
     id: 0
   },
   {
-    name: 'Profile',
+    name: 'Sign In',
+    to: "/signin",
     id: 1
   },
 ]
@@ -33,13 +43,21 @@ const tabs = [
 const AppBar = () => {
   return (
     <View style={styles.container}>
-      <FlatList
+      {/* <FlatList
         data={tabs}
         // ItemSeparatorComponent={ItemSeparator}
-        renderItem={({item}) => <AppBarTab name={item.name} />}
+        renderItem={({item}) => <AppBarTab tab={item} />}
         keyExtractor={tab => tab.id}
         contentContainerStyle={styles.list}
-      />
+      /> */}
+      <ScrollView horizontal contentContainerStyle={styles.list}>
+        <Link style={styles.tab} to={'/'}>
+          <Text color="secondary" fontWeight="bold">Repositories</Text>
+        </Link>
+        <Link style={styles.tab} to={'/signin'}>
+          <Text color="secondary" fontWeight="bold">Sign In</Text>
+        </Link>
+      </ScrollView>
     </View>
   );
 };
